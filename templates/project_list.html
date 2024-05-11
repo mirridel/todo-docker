@@ -1,0 +1,25 @@
+{% extends 'base_generic.html' %}
+{% load core_filters %}
+{% load static %}
+
+{% block extra-head %}
+    <style>
+        td {
+            height: 6em;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <div id="target">
+        <div class="vh-100 d-flex justify-content-center align-items-center"
+             hx-get="{% url 'get-tasks' %}"
+             hx-trigger="load delay:1s"
+             hx-swap="outerHTML"
+        >
+            <div class="spinner-border" role="status">
+                <span class="visually-hidden">Загрузка...</span>
+            </div>
+        </div>
+    </div>
+{% endblock %}

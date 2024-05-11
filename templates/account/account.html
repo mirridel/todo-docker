@@ -1,0 +1,100 @@
+{% extends 'account/base_generic.html' %}
+{% load core_filters %}
+{% load static %}
+
+{% block subtitle %}Профиль пользователя {{ user.email }}{% endblock %}
+
+{% block subcontent %}
+    <section>
+        <div class="card mb-2">
+            <div class="row g-0">
+                <div class="col-md-2">
+                    <div class="ratio ratio-1x1">
+                        <img {% if user.avatar %}
+                            src="{{ user.avatar.url }}"
+                        {% else %}
+                            src="{% static 'images/404.png' %}"
+                        {% endif %}
+                            class="img-fluid rounded-start" alt="Аватар пользователя" style="object-fit: cover;">
+                    </div>
+                </div>
+                <div class="col-md-10">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ user.first_name }} {{ user.last_name }}</h5>
+                    </div>
+                    <ul>
+                        <li><strong>Почта:</strong> {{ user.email }}</li>
+                        <li><strong>Должность:</strong> {{ user.position }}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <div class="card my-3">
+        <div class="card-header">
+            <div class="card-text">Новые задачи</div>
+        </div>
+        <div class="card-body">
+            <div class="list-group list-group-flush">
+                {% for created_task in created_tasks %}
+                    <a href="{{ created_task.get_absolute_url }}"
+                       class="list-group-item list-group-item-action">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1">Задача №{{ created_task.id }}</h5>
+                            <small>{{ created_task.get_status_display }}</small>
+                        </div>
+                        <p class="mb-1">{{ created_task.created_at.date }} — {{ created_task.expired_at.date }}</p>
+                        <small>Осталось: {{ created_task.expired_at.date|days_left }} д.</small>
+                    </a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <div class="card my-3">
+        <div class="card-header">
+            <div class="card-text">Истекающие задачи</div>
+        </div>
+        <div class="card-body">
+            <div class="list-group list-group-flush">
+                {% for expired_task in expired_tasks %}
+                    <a href="{{ expired_task.get_absolute_url }}"
+                       class="list-group-item list-group-item-action">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1">Задача №{{ expired_task.id }}</h5>
+                            <small>{{ expired_task.get_status_display }}</small>
+                        </div>
+                        <p class="mb-1">Истекает: {{ expired_task.expired_at.date }}</p>
+                        <small>Осталось: {{ expired_task.expired_at.date|days_left }} д.</small>
+                    </a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <div class="card my-3">
+        <div class="card-header">
+            <div class="card-text">
+                {% if vacation.status == 'planned' %}
+                    Ближайший отпуск
+                {% elif vacation.status == 'processed' %}
+                    Текущий отпуск
+                {% else %}
+                    Отпуск
+                {% endif %}
+            </div>
+        </div>
+        <div class="card-body">
+            {% if vacation %}
+                <h5> {{ vacation.start_date }} — {{ vacation.end_date }}</h5>
+                {% if vacation.status == 'processed' %}
+                    <small>Осталось: {{ vacation.end_date|days_left }} д.</small>
+                {% endif %}
+            {% else %}
+                Информация отсутствует
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

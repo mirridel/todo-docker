@@ -1,0 +1,94 @@
+{% load core_filters %}
+
+<button class="btn btn-warning"
+        data-hx-get="{% url 'get-tasks' %}"
+        hx-vals='{"action": "previous", "year": {{ previous_year }}, "month": {{ previous_month }}}'
+        hx-target="#target"
+>
+    Предыдущий месяц
+</button>
+<button class="btn btn-warning"
+        data-hx-get="{% url 'get-tasks' %}"
+        hx-vals='{"action": "next", "year": {{ next_year }}, "month": {{ next_month }}}'
+        hx-target="#target"
+>
+    Следующий месяц
+</button>
+
+<h1 class="my-4">Задачи на <span class="bg-warning-subtle text-lowercase">{{ month_name }}</span> {{ year }} года</h1>
+
+<div class="table-responsive">
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col" class="col-1">Пн</th>
+            <th scope="col" class="col-1">Вт</th>
+            <th scope="col" class="col-1">Ср</th>
+            <th scope="col" class="col-1">Чт</th>
+            <th scope="col" class="col-1">Пт</th>
+            <th scope="col" class="col-1">Сб</th>
+            <th scope="col" class="col-1">Вс</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for week in calendar_month %}
+            <tr>
+                {% for day in week %}
+                    <td {% if day.0 == 0 %} class="bg-secondary-subtle" {% endif %}>
+                        {% if day.0 != 0 %}
+                            <a class="text-decoration-none" href="#day{{ day.0 }}">
+                                <div class="card h-100">
+                                    <div class="card-body">
+                                        <div class="card-text">
+                                            <h6>{{ day.0 }}</h6>
+                                            <div class="text-end">
+                                                {% if day.0 in tasks_dict %}
+                                                    {# <span class="badge text-bg-success">X</span> #}
+                                                    <span class="badge text-bg-danger">{{ tasks_dict|get_item:day.0|length }}</span>
+                                                    {# <span class="badge text-bg-secondary">X</span> #}
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        {% endif %}
+                    </td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% for week in calendar_month %}
+    {% for day in week %}
+        {% if day.0 != 0 %}
+            <div id="day{{ day.0 }}" class="card mb-3" style="min-height: 10em">
+                <div class="card-body">
+                    <div class="card-text">
+                        <div class="row">
+                            <div class="col-md-1 text-center">
+                                <h4>{{ day.0 }}</h4>
+                                <h6>{{ month_name }}</h6>
+                            </div>
+                            <div class="col">
+                                {% for task in tasks_dict|get_item:day.0 %}
+                                    <div class="d-flex">
+                                        <div class="me-3">{{ task.job.title }} ({{ task.get_status_display }})</div>
+                                        <div class="flex-grow-1 text-end">
+                                            <a href="{{ task.get_absolute_url }}">Перейти ></a>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                {% empty %}
+                                    На сегодня задачи отсутствуют
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    {% endfor %}
+{% endfor %}

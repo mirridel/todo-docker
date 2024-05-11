@@ -1,0 +1,87 @@
+{% extends 'base_generic.html' %}
+{% load static %}
+
+{% block header %}
+    <!-- Hero Section -->
+    <section class="d-flex py-5 justify-content-center align-items-center text-center text-white vh-100"
+             style="background-blend-mode: multiply;
+                     background: #858585 url({% static 'images/index/hero-section.jpg' %}) center;
+                     background-size: cover;)">
+        <div>
+            <h1 class="display-4">Добро пожаловать в нашу строительную компанию!</h1>
+            <p class="lead">Мы предлагаем высококачественные строительные услуги.</p>
+        </div>
+    </section>
+
+    <!-- Company Leader Section -->
+    <section class="py-5 bg-dark text-light">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 d-flex justify-content-center align-items-center">
+                    <div>
+                        <h2>Мы - лидер в строительстве!</h2>
+                        <p>Наша компания является лидером в области строительства, предлагая высококачественный
+                            сервис.
+                            Мы предоставляем широкий спектр услуг, чтобы удовлетворить все ваши потребности. Наша
+                            команда профессионалов специализируется на различных областях, включая гражданское
+                            строительство, промышленное строительство, ремонт и реконструкцию, а также ландшафтный
+                            дизайн.
+                        </p>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <!-- Replace 'image.jpg' with your image path -->
+                    <div class="ratio ratio-1x1" style="background-blend-mode: multiply;
+                            background: #858585 url({% static 'images/index/intro.jpg' %}) center;
+                            background-size: cover;)">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Gallery Section -->
+    <section class="py-5">
+        <div class="container">
+            <h2 class="mb-3">Наши услуги</h2>
+            <div class="row g-3">
+                <div class="col-lg-4">
+                    <div class="ratio ratio-1x1" style="background-blend-mode: multiply;
+                            background: #858585 url({% static 'images/index/service-1.jpg' %}) center;
+                            background-size: cover;)">
+                        <div class="d-flex justify-content-center align-items-center text-white text-center">
+                            <div>
+                                <h3>Услуга 1</h3>
+                                <p>Описание услуги 1</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="ratio ratio-1x1" style="background-blend-mode: multiply;
+                            background: #858585 url({% static 'images/index/service-2.jpg' %}) center;
+                            background-size: cover;)">
+                        <div class="d-flex justify-content-center align-items-center text-white text-center">
+                            <div>
+                                <h3>Услуга 2</h3>
+                                <p>Описание услуги 2</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="ratio ratio-1x1" style="background-blend-mode: multiply;
+                            background: #858585 url({% static 'images/index/service-3.jpg' %}) center;
+                            background-size: cover;)">
+                        <div class="d-flex justify-content-center align-items-center text-white text-center">
+                            <div>
+                                <h3>Услуга 3</h3>
+                                <p>Описание услуги 3</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

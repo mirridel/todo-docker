@@ -1,0 +1,22 @@
+{% extends 'base_generic.html' %}
+
+{% block content %}
+    <section class="py-5">
+        <h4 class="pb-3">
+            {% block subtitle %}{% endblock %}
+        </h4>
+        <div class="row">
+            <div class="col-lg-2">
+                <div class="list-group">
+                    <a href="#" class="list-group-item list-group-item-action">Профиль</a>
+                    <a href="{% url 'tasks' %}" class="list-group-item list-group-item-action">Задачи</a>
+                    <a href="{% url 'vacations' %}" class="list-group-item list-group-item-action">Отпуска</a>
+                    <a href="{% url 'reports' %}" class="list-group-item list-group-item-action">Сообщения</a>
+                </div>
+            </div>
+            <div class="col">
+                {% block subcontent %} {% endblock %}
+            </div>
+        </div>
+    </section>
+{% endblock %}

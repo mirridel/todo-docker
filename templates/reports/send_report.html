@@ -1,0 +1,18 @@
+{% extends 'base_generic.html' %}
+{% load crispy_forms_filters %}
+{% load core_filters %}
+{% load static %}
+
+{% block content %}
+    <section class="py-5">
+        <h4 class="mb-3">Новое сообщение</h4>
+        <form class="form" method="post">
+            {% csrf_token %}
+            {{ report_form|crispy }}
+            <button class="btn btn-warning"
+                    type="submit">
+                Отправить
+            </button>
+        </form>
+    </section>
+{% endblock %}

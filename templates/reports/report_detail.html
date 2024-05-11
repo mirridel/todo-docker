@@ -1,0 +1,30 @@
+<div class="card">
+    <div class="card-header">
+        <div class="card-text">
+            <h5>Тема: {{ obj.theme }}</h5>
+        </div>
+    </div>
+    <div class="card-body">
+        {% if obj.answer %}
+            <div class="card-text">
+                <h5>Ответ</h5>
+                <div class="py-3">
+                    {{ obj.answer }}
+                </div>
+                <div class="text-end">
+                    {{ obj.updated_at }}
+                </div>
+            </div>
+            <hr>
+        {% endif %}
+        <div class="card-text">
+            <h5>Сообщение</h5>
+            <div class="py-3">
+                {{ obj.content|linebreaks }}
+            </div>
+            <div class="text-end">
+                {{ obj.created_at }}
+            </div>
+        </div>
+    </div>
+</div>

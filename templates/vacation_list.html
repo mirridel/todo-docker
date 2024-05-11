@@ -1,0 +1,48 @@
+{% extends 'base_generic.html' %}
+{% load static %}
+
+{% block content %}
+    <h4 class="text-center mb-3">Отпуск</h4>
+    {% if next_vacation %}
+        <div class="card">
+            <div class="card-header">
+                <div class="card-text">
+                    <div>Ближайший отпуск</div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="card-text">
+                    <div>Начало: {{ next_vacation.start_date }}</div>
+                    <div>Окончание: {{ next_vacation.end_date }}</div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <div class="card-text">
+                    <div>Общее кол-во дней: {{ days_vacation }}</div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    <div class="row">
+        <div class="col">
+            <div>Завершенные отпуска</div>
+            <ul>
+                {% for completed_vacation in completed_vacations %}
+                    <li>{{ completed_vacation.start_date }} - {{ completed_vacation.end_date }}</li>
+                {% empty %}
+                    Список пуст
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="col">
+            <div>Отмененные отпуска</div>
+            <ul>
+                {% for cancelled_vacation in cancelled_vacations %}
+                    <li>{{ cancelled_vacation.start_date }} - {{ cancelled_vacation.end_date }}</li>
+                {% empty %}
+                    Список пуст
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+{% endblock %}

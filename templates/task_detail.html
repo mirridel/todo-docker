@@ -1,0 +1,62 @@
+{% extends 'base_generic.html' %}
+{% load core_filters %}
+{% load static %}
+
+{% block content %}
+    <section class="py-5">
+        <div class="card mb-3">
+            <div class="card-header">
+                <div class="card-title">
+                    <div class="d-flex">
+                        <div class="fs-5 my-3"><strong>Задача №{{ task.id }}</strong></div>
+                        <div class="flex-grow-1 text-end">{{ task.get_status_display }}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="card-text">
+                    <div>Тип: {{ task.job.category }}</div>
+                    <div>Название: {{ task.job.title }}</div>
+                    <div>Кол-во: {{ task.quantity }} {{ task.job.type }}</div>
+                    <div>Цена ({{ task.job.type }}): {{ task.job.price }} руб</div>
+                    <hr>
+                    <div>Дата создания: {{ task.created_at.date }}</div>
+                    <div>Создатель: {{ task.creator }}</div>
+                    <hr>
+                    <div>Дата исполнения: {{ task.expired_at.date }}</div>
+                    <div>Исполнитель: {{ task.executor }}</div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <h5>Базовая стоимость</h5>
+                <div>{{ task.quantity }} {{ task.job.type }} x {{ task.job.price }} руб
+                    = {% widthratio task.quantity 1 task.job.price %} руб.
+                </div>
+                <br>
+                <h5>Коэффициент</h5>
+                <div>{{ task.coefficient }}</div>
+                <br>
+                <h5>Итого</h5>
+                <div>{{ task.total }} руб</div>
+            </div>
+        </div>
+        <div class="row g-3">
+            <div class="col-lg-auto">
+                <button class="btn btn-warning">
+                    <i class="bi bi-question-circle"></i>
+                    Создать сообщение
+                </button>
+            </div>
+            <div class="col">
+                <div class="text-end">
+                    <button class="btn btn-warning">
+                        Приступить
+                    </button>
+                    <button class="btn btn-danger">
+                        Завершить
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

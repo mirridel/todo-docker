@@ -1,0 +1,59 @@
+{% extends 'base_generic.html' %}
+{% load static %}
+
+{% block content %}
+    <section class="py-3">
+        <h4 class="mb-3">Сообщения</h4>
+        <div class="mb-3">
+            <a href="{% url 'send-report' %}" class="btn btn-warning">+ Новое сообщение</a>
+            <a class="btn btn-warning"><</a>
+            <a class="btn btn-warning">></a>
+        </div>
+        {% if last_report %}
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="list-group list-group-flush">
+                                {% for report in page_obj %}
+                                    <a hx-get="{% url 'report-detail' %}"
+                                       hx-target="#target"
+                                       hx-swap="innerHTML"
+                                       hx-vals='{"id": "{{ report.id }}"}'
+                                       class="list-group-item list-group-item-action">
+                                        <div class="d-flex w-100 justify-content-between">
+                                            <h5 class="mb-1">Тема: {{ report.theme|truncatechars:25 }}</h5>
+                                            {% if report.answer %}
+                                                <small><span class="badge text-bg-success"><i
+                                                        class="bi bi-envelope"></i></span></small>
+                                            {% endif %}
+                                        </div>
+                                        <p class="mb-1">
+                                            {{ report.content|truncatechars:90 }}
+                                        </p>
+                                        <small>{{ report.created_at.date }}</small>
+                                    </a>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="target" class="col-lg-8" hx-get="{% url 'report-detail' %}"
+                     hx-trigger="load delay:1s"
+                     hx-swap="innerHTML"
+                     hx-vals='{"id": "{{ last_report.id }}"}'>
+                    <div class="text-center">
+                        <div class="spinner-border" role="status">
+                            <span class="visually-hidden">Загрузка...</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <div class="text-center">
+                <h5>Пока здесь пусто</h5>
+            </div>
+        {% endif %}
+    </section>
+{% endblock %}
